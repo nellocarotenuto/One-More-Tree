@@ -15,6 +15,8 @@ using Microsoft.Extensions.Options;
 using Microsoft.EntityFrameworkCore;
 using Azure.Storage.Blobs;
 using Microsoft.Azure.CognitiveServices.ContentModerator;
+using Microsoft.Azure.CognitiveServices.Vision.ComputerVision;
+using Microsoft.Rest;
 
 namespace Back_End
 {
@@ -51,16 +53,30 @@ namespace Back_End
             string contentModeratorKey = Configuration["CONTENT_MODERATOR_KEY"];
             string contentModeratorEndpoint = Configuration["CONTENT_MODERATOR_ENDPOINT"];
             
-            ApiKeyServiceClientCredentials contentModeratorCredentials = 
-                new ApiKeyServiceClientCredentials(contentModeratorKey);
+            ServiceClientCredentials contentModeratorCredentials = 
+                new Microsoft.Azure.CognitiveServices.ContentModerator.ApiKeyServiceClientCredentials(contentModeratorKey);
 
             ContentModeratorClient contentModeratorClient =
                new ContentModeratorClient(contentModeratorCredentials);
             
             contentModeratorClient.Endpoint = contentModeratorEndpoint;
 
-            services.AddSingleton<ContentModeratorClient>();
-            
+            services.AddSingleton<ContentModeratorClient>(contentModeratorClient);
+
+            // Configure Computer Vision for Image Recognition
+            string computerVisionKey = Configuration["COMPUTER_VISION_KEY"];
+            string computerVisionEndpoint = Configuration["COMPUTER_VISION_ENDPOINT"];
+
+            ServiceClientCredentials computerVisionCredentials =
+                new Microsoft.Azure.CognitiveServices.Vision.ComputerVision.ApiKeyServiceClientCredentials(computerVisionKey);
+
+            ComputerVisionClient computerVisionClient =
+               new ComputerVisionClient(computerVisionCredentials);
+
+            computerVisionClient.Endpoint = computerVisionEndpoint;
+
+            services.AddSingleton<ComputerVisionClient>(computerVisionClient);
+
             services.AddControllers();
         }
 
