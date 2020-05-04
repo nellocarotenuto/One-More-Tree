@@ -14,6 +14,7 @@ using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
 using Microsoft.EntityFrameworkCore;
 using Azure.Storage.Blobs;
+using Microsoft.Azure.CognitiveServices.ContentModerator;
 
 namespace Back_End
 {
@@ -45,6 +46,20 @@ namespace Back_End
             }
 
             services.AddSingleton<BlobServiceClient>(blobServiceClient);
+
+            // Configure Azure Content Moderator
+            string contentModeratorKey = Configuration["CONTENT_MODERATOR_KEY"];
+            string contentModeratorEndpoint = Configuration["CONTENT_MODERATOR_ENDPOINT"];
+            
+            ApiKeyServiceClientCredentials contentModeratorCredentials = 
+                new ApiKeyServiceClientCredentials(contentModeratorKey);
+
+            ContentModeratorClient contentModeratorClient =
+               new ContentModeratorClient(contentModeratorCredentials);
+            
+            contentModeratorClient.Endpoint = contentModeratorEndpoint;
+
+            services.AddSingleton<ContentModeratorClient>();
             
             services.AddControllers();
         }
