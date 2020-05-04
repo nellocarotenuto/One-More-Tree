@@ -29,7 +29,7 @@ namespace Back_End
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddDbContext<OneMoreTreeContext>(options => {
-                options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection"));
+                options.UseSqlServer(Configuration.GetConnectionString("DATABASE_CONNECTION_STRING"));
             });
 
 
