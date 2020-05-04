@@ -13,6 +13,7 @@ using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
 using Microsoft.EntityFrameworkCore;
+using Azure.Storage.Blobs;
 
 namespace Back_End
 {
@@ -28,12 +29,23 @@ namespace Back_End
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+            // Configure Database Context
             services.AddDbContext<OneMoreTreeContext>(options => {
                 options.UseSqlServer(Configuration.GetConnectionString("DATABASE_CONNECTION_STRING"));
             });
 
+            // Configure Azure Blob Storage 
+            BlobServiceClient blobServiceClient =
+                new BlobServiceClient(Configuration.GetConnectionString("STORAGE_CONNECTION_STRING"));
+            BlobContainerClient containerClient = blobServiceClient.GetBlobContainerClient("trees");
 
+            if (!containerClient.Exists())
+            {
+                containerClient.Create();
+            }
 
+            services.AddSingleton<BlobServiceClient>(blobServiceClient);
+            
             services.AddControllers();
         }
 
