@@ -17,6 +17,7 @@ using Azure.Storage.Blobs;
 using Microsoft.Azure.CognitiveServices.ContentModerator;
 using Microsoft.Azure.CognitiveServices.Vision.ComputerVision;
 using Microsoft.Rest;
+using AzureMapsToolkit;
 
 namespace Back_End
 {
@@ -77,6 +78,12 @@ namespace Back_End
 
             services.AddSingleton<ComputerVisionClient>(computerVisionClient);
 
+            // Configure Azure Maps client
+            AzureMapsServices mapsClient = new AzureMapsServices(Configuration["MAPS_KEY"]);
+
+            services.AddSingleton<AzureMapsServices>(mapsClient);
+
+            // Add controllers
             services.AddControllers();
         }
 
