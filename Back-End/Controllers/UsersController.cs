@@ -13,9 +13,9 @@ namespace Back_End.Controllers
     [ApiController]
     public class UsersController : ControllerBase
     {
-        private readonly OneMoreTreeContext _context;
+        private readonly DatabaseContext _context;
 
-        public UsersController(OneMoreTreeContext context)
+        public UsersController(DatabaseContext context)
         {
             _context = context;
         }

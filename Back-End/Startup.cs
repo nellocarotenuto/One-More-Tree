@@ -34,7 +34,7 @@ namespace Back_End
         public void ConfigureServices(IServiceCollection services)
         {
             // Configure Database Context
-            services.AddDbContext<OneMoreTreeContext>(options => {
+            services.AddDbContext<DatabaseContext>(options => {
                 options.UseSqlServer(Configuration.GetConnectionString("DATABASE_CONNECTION_STRING"));
             });
 
@@ -92,7 +92,7 @@ namespace Back_End
         {
             using (var serviceScope = app.ApplicationServices.GetService<IServiceScopeFactory>().CreateScope())
             {
-                var context = serviceScope.ServiceProvider.GetRequiredService<OneMoreTreeContext>();
+                var context = serviceScope.ServiceProvider.GetRequiredService<DatabaseContext>();
                 context.Database.Migrate();
             }
 

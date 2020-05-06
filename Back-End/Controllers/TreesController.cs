@@ -13,25 +13,25 @@ namespace Back_End.Controllers
     [ApiController]
     public class TreesController : ControllerBase
     {
-        private readonly OneMoreTreeContext _context;
+        private readonly DatabaseContext _databaseContext;
 
-        public TreesController(OneMoreTreeContext context)
+        public TreesController(DatabaseContext context)
         {
-            _context = context;
+            _databaseContext = context;
         }
 
         // GET: api/Trees
         [HttpGet]
         public async Task<ActionResult<IEnumerable<Tree>>> GetTrees()
         {
-            return await _context.Trees.ToListAsync();
+            return await _databaseContext.Trees.ToListAsync();
         }
 
         // GET: api/Trees/5
         [HttpGet("{id}")]
         public async Task<ActionResult<Tree>> GetTree(long id)
         {
-            var tree = await _context.Trees.FindAsync(id);
+            var tree = await _databaseContext.Trees.FindAsync(id);
 
             if (tree == null)
             {
@@ -52,11 +52,11 @@ namespace Back_End.Controllers
                 return BadRequest();
             }
 
-            _context.Entry(tree).State = EntityState.Modified;
+            _databaseContext.Entry(tree).State = EntityState.Modified;
 
             try
             {
-                await _context.SaveChangesAsync();
+                await _databaseContext.SaveChangesAsync();
             }
             catch (DbUpdateConcurrencyException)
             {
@@ -79,8 +79,8 @@ namespace Back_End.Controllers
         [HttpPost]
         public async Task<ActionResult<Tree>> PostTree(Tree tree)
         {
-            _context.Trees.Add(tree);
-            await _context.SaveChangesAsync();
+            _databaseContext.Trees.Add(tree);
+            await _databaseContext.SaveChangesAsync();
 
             return CreatedAtAction("GetTree", new { id = tree.ID }, tree);
         }
@@ -89,21 +89,21 @@ namespace Back_End.Controllers
         [HttpDelete("{id}")]
         public async Task<ActionResult<Tree>> DeleteTree(long id)
         {
-            var tree = await _context.Trees.FindAsync(id);
+            var tree = await _databaseContext.Trees.FindAsync(id);
             if (tree == null)
             {
                 return NotFound();
             }
 
-            _context.Trees.Remove(tree);
-            await _context.SaveChangesAsync();
+            _databaseContext.Trees.Remove(tree);
+            await _databaseContext.SaveChangesAsync();
 
             return tree;
         }
 
         private bool TreeExists(long id)
         {
-            return _context.Trees.Any(e => e.ID == id);
+            return _databaseContext.Trees.Any(e => e.ID == id);
         }
     }
 }

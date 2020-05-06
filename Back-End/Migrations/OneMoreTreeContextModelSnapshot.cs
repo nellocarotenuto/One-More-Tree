@@ -8,7 +8,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace Back_End.Migrations
 {
-    [DbContext(typeof(OneMoreTreeContext))]
+    [DbContext(typeof(DatabaseContext))]
     partial class OneMoreTreeContextModelSnapshot : ModelSnapshot
     {
         protected override void BuildModel(ModelBuilder modelBuilder)
