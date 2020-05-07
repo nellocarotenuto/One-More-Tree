@@ -18,6 +18,7 @@ using Microsoft.Azure.CognitiveServices.ContentModerator;
 using Microsoft.Azure.CognitiveServices.Vision.ComputerVision;
 using Microsoft.Rest;
 using AzureMapsToolkit;
+using Azure.Storage.Blobs.Models;
 
 namespace Back_End
 {
@@ -46,6 +47,7 @@ namespace Back_End
             if (!containerClient.Exists())
             {
                 containerClient.Create();
+                containerClient.SetAccessPolicy(PublicAccessType.Blob);
             }
 
             services.AddSingleton<BlobServiceClient>(blobServiceClient);
