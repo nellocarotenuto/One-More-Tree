@@ -8,6 +8,7 @@ using Microsoft.EntityFrameworkCore;
 using Back_End.Models;
 using Azure.Storage.Blobs;
 using System.Globalization;
+using Azure.Storage.Blobs.Models;
 
 namespace Back_End.Controllers
 {
@@ -84,8 +85,8 @@ namespace Back_End.Controllers
         {
             BlobContainerClient blobContainerClient = _blobServiceClient.GetBlobContainerClient("trees");
             BlobClient blobClient = blobContainerClient.GetBlobClient(string.Format(@"{0}.png", Guid.NewGuid()));
-            
-            await blobClient.UploadAsync(request.Photo.OpenReadStream(), true);
+
+            await blobClient.UploadAsync(request.Photo.OpenReadStream(), new BlobHttpHeaders() { ContentType = "image/png" });
 
             Tree tree = new Tree() {
                 Photo = blobClient.Uri.ToString(),
