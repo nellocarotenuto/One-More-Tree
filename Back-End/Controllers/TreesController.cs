@@ -6,6 +6,8 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Back_End.Models;
+using Azure.Storage.Blobs;
+using System.Globalization;
 
 namespace Back_End.Controllers
 {
@@ -14,10 +16,12 @@ namespace Back_End.Controllers
     public class TreesController : ControllerBase
     {
         private readonly DatabaseContext _databaseContext;
+        private readonly BlobServiceClient _blobServiceClient;
 
-        public TreesController(DatabaseContext context)
+        public TreesController(DatabaseContext context, BlobServiceClient blobServiceClient)
         {
             _databaseContext = context;
+            _blobServiceClient = blobServiceClient;
         }
 
         // GET: api/Trees
@@ -74,11 +78,25 @@ namespace Back_End.Controllers
         }
 
         // POST: api/Trees
-        // To protect from overposting attacks, enable the specific properties you want to bind to, for
-        // more details, see https://go.microsoft.com/fwlink/?linkid=2123754.
         [HttpPost]
-        public async Task<ActionResult<Tree>> PostTree(Tree tree)
+        [Consumes("multipart/form-data")]
+        public async Task<ActionResult<Tree>> PostTree([FromForm] TreeApiPostRequest request)
         {
+            BlobContainerClient blobContainerClient = _blobServiceClient.GetBlobContainerClient("trees");
+            BlobClient blobClient = blobContainerClient.GetBlobClient(string.Format(@"{0}.png", Guid.NewGuid()));
+            
+            await blobClient.UploadAsync(request.Photo.OpenReadStream(), true);
+
+            Tree tree = new Tree() {
+                Photo = blobClient.Uri.ToString(),
+                Description = request.Description,
+                Latitude = Double.Parse(request.Coordinates.Split(",")[0], CultureInfo.InvariantCulture),
+                Longitude = Double.Parse(request.Coordinates.Split(",")[1], CultureInfo.InvariantCulture),
+                State = request.State,
+                City = request.City,
+                Date = DateTime.Now
+            };
+            
             _databaseContext.Trees.Add(tree);
             await _databaseContext.SaveChangesAsync();
 
