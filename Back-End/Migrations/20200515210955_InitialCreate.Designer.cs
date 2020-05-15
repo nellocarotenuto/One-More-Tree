@@ -10,7 +10,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Back_End.Migrations
 {
     [DbContext(typeof(DatabaseContext))]
-    [Migration("20200507212706_InitialCreate")]
+    [Migration("20200515210955_InitialCreate")]
     partial class InitialCreate
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -23,12 +23,13 @@ namespace Back_End.Migrations
 
             modelBuilder.Entity("Back_End.Models.Tree", b =>
                 {
-                    b.Property<long>("ID")
+                    b.Property<long>("Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("bigint")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
                     b.Property<string>("City")
+                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<DateTime>("Date")
@@ -44,49 +45,53 @@ namespace Back_End.Migrations
                         .HasColumnType("float");
 
                     b.Property<string>("Photo")
+                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("State")
+                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<long?>("UserID")
+                    b.Property<long?>("UserId")
                         .HasColumnType("bigint");
 
-                    b.HasKey("ID");
+                    b.HasKey("Id");
 
-                    b.HasIndex("UserID");
+                    b.HasIndex("UserId");
 
                     b.ToTable("Trees");
                 });
 
             modelBuilder.Entity("Back_End.Models.User", b =>
                 {
-                    b.Property<long>("ID")
+                    b.Property<long>("Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("bigint")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
                     b.Property<string>("Email")
-                        .HasColumnType("nvarchar(max)");
+                        .IsRequired()
+                        .HasColumnType("nvarchar(450)");
 
-                    b.Property<string>("FacebookID")
-                        .HasColumnType("nvarchar(max)");
+                    b.Property<string>("FacebookId")
+                        .HasColumnType("nvarchar(450)");
 
-                    b.Property<string>("FirstName")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("LastName")
+                    b.Property<string>("Name")
+                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Picture")
+                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<long?>("UserID")
-                        .HasColumnType("bigint");
+                    b.HasKey("Id");
 
-                    b.HasKey("ID");
+                    b.HasIndex("Email")
+                        .IsUnique();
 
-                    b.HasIndex("UserID");
+                    b.HasIndex("FacebookId")
+                        .IsUnique()
+                        .HasFilter("[FacebookId] IS NOT NULL");
 
                     b.ToTable("Users");
                 });
@@ -95,14 +100,7 @@ namespace Back_End.Migrations
                 {
                     b.HasOne("Back_End.Models.User", "User")
                         .WithMany("Trees")
-                        .HasForeignKey("UserID");
-                });
-
-            modelBuilder.Entity("Back_End.Models.User", b =>
-                {
-                    b.HasOne("Back_End.Models.User", null)
-                        .WithMany("Friends")
-                        .HasForeignKey("UserID");
+                        .HasForeignKey("UserId");
                 });
 #pragma warning restore 612, 618
         }

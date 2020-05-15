@@ -1,4 +1,5 @@
 ﻿using System;
+
 using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace Back_End.Migrations
@@ -11,61 +12,61 @@ namespace Back_End.Migrations
                 name: "Users",
                 columns: table => new
                 {
-                    ID = table.Column<long>(nullable: false)
+                    Id = table.Column<long>(nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    FirstName = table.Column<string>(nullable: true),
-                    LastName = table.Column<string>(nullable: true),
-                    Picture = table.Column<string>(nullable: true),
-                    Email = table.Column<string>(nullable: true),
-                    FacebookID = table.Column<string>(nullable: true),
-                    UserID = table.Column<long>(nullable: true)
+                    Name = table.Column<string>(nullable: false),
+                    Picture = table.Column<string>(nullable: false),
+                    Email = table.Column<string>(nullable: false),
+                    FacebookId = table.Column<string>(nullable: true)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Users", x => x.ID);
-                    table.ForeignKey(
-                        name: "FK_Users_Users_UserID",
-                        column: x => x.UserID,
-                        principalTable: "Users",
-                        principalColumn: "ID",
-                        onDelete: ReferentialAction.Restrict);
+                    table.PrimaryKey("PK_Users", x => x.Id);
                 });
 
             migrationBuilder.CreateTable(
                 name: "Trees",
                 columns: table => new
                 {
-                    ID = table.Column<long>(nullable: false)
+                    Id = table.Column<long>(nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    Photo = table.Column<string>(nullable: true),
+                    Photo = table.Column<string>(nullable: false),
                     Description = table.Column<string>(nullable: true),
                     Latitude = table.Column<double>(nullable: false),
                     Longitude = table.Column<double>(nullable: false),
-                    City = table.Column<string>(nullable: true),
-                    State = table.Column<string>(nullable: true),
+                    City = table.Column<string>(nullable: false),
+                    State = table.Column<string>(nullable: false),
                     Date = table.Column<DateTime>(nullable: false),
-                    UserID = table.Column<long>(nullable: true)
+                    UserId = table.Column<long>(nullable: true)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Trees", x => x.ID);
+                    table.PrimaryKey("PK_Trees", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_Trees_Users_UserID",
-                        column: x => x.UserID,
+                        name: "FK_Trees_Users_UserId",
+                        column: x => x.UserId,
                         principalTable: "Users",
-                        principalColumn: "ID",
+                        principalColumn: "Id",
                         onDelete: ReferentialAction.Restrict);
                 });
 
             migrationBuilder.CreateIndex(
-                name: "IX_Trees_UserID",
+                name: "IX_Trees_UserId",
                 table: "Trees",
-                column: "UserID");
+                column: "UserId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Users_UserID",
+                name: "IX_Users_Email",
                 table: "Users",
-                column: "UserID");
+                column: "Email",
+                unique: true);
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Users_FacebookId",
+                table: "Users",
+                column: "FacebookId",
+                unique: true,
+                filter: "[FacebookId] IS NOT NULL");
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)
