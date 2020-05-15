@@ -1,18 +1,25 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 
 namespace Back_End.Models
 {
     public class User
     {
-        public long ID { get; set; }
-        public string FirstName { get; set; }
-        public string LastName { get; set; }
-        public string Picture { get; set; }
-        public string Email { get; set; }
-        public string FacebookID { get; set; }
+        [Key]
+        public long Id { get; set; }
 
-        public List<Tree> Trees { get; set; }
-        public HashSet<User> Friends { get; set; }
+        [Required]
+        public string Name { get; set; }
+
+        [Required]
+        public string Picture { get; set; }
+
+        [Required]
+        public string Email { get; set; }
+
+        public string FacebookId { get; set; }
+
+        public ICollection<Tree> Trees { get; set; }
     }
 }
