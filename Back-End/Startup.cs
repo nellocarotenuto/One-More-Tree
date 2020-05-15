@@ -1,24 +1,24 @@
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using Back_End.Models;
+using System.Text;
+
+using AzureMapsToolkit;
+using Azure.Storage.Blobs.Models;
+using Azure.Storage.Blobs;
+
+using Microsoft.AspNetCore.Authentication.Cookies;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
-using Microsoft.AspNetCore.HttpsPolicy;
-using Microsoft.AspNetCore.Mvc;
+using Microsoft.Azure.CognitiveServices.ContentModerator;
+using Microsoft.Azure.CognitiveServices.Vision.ComputerVision;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
-using Microsoft.Extensions.Logging;
-using Microsoft.Extensions.Options;
-using Microsoft.EntityFrameworkCore;
-using Azure.Storage.Blobs;
-using Microsoft.Azure.CognitiveServices.ContentModerator;
-using Microsoft.Azure.CognitiveServices.Vision.ComputerVision;
+using Microsoft.IdentityModel.Tokens;
 using Microsoft.Rest;
-using AzureMapsToolkit;
-using Azure.Storage.Blobs.Models;
+
+using Back_End.Models;
 
 namespace Back_End
 {
@@ -85,8 +85,38 @@ namespace Back_End
 
             services.AddSingleton<AzureMapsServices>(mapsClient);
 
+            // Add authentication
+            services.AddAuthentication(options =>
+                {
+                    options.DefaultScheme = JwtBearerDefaults.AuthenticationScheme;
+                    options.DefaultSignInScheme = CookieAuthenticationDefaults.AuthenticationScheme;
+                    options.DefaultAuthenticateScheme = CookieAuthenticationDefaults.AuthenticationScheme;
+                })
+                .AddCookie()
+                .AddJwtBearer(options =>
+                {
+                    options.SaveToken = true;
+                    options.TokenValidationParameters = new TokenValidationParameters()
+                    {
+                        ValidateIssuer = true,
+                        ValidateAudience = true,
+                        ValidIssuer = Configuration["JWT_ISSUER"],
+                        ValidAudience = Configuration["JWT_AUDIENCE"],
+                        IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(Configuration["JWT_SIGN_KEY"])),
+                        ClockSkew = TimeSpan.Zero
+                    };
+                })
+                .AddFacebook(options =>
+                {
+                    options.ClientId = Configuration["FACEBOOK_APP_ID"];
+                    options.ClientSecret = Configuration["FACEBOOK_APP_SECRET"];
+                    options.SaveTokens = true;
+                });
+
             // Add controllers
-            services.AddControllers();
+            services.AddControllers().AddNewtonsoftJson(
+                options => options.SerializerSettings.ReferenceLoopHandling = Newtonsoft.Json.ReferenceLoopHandling.Ignore
+            );
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -107,6 +137,7 @@ namespace Back_End
 
             app.UseRouting();
 
+            app.UseAuthentication();
             app.UseAuthorization();
 
             app.UseEndpoints(endpoints =>
