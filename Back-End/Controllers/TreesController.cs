@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Globalization;
 using System.IdentityModel.Tokens.Jwt;
 using System.Linq;
+using System.Security.Claims;
 using System.Threading.Tasks;
 
 using Azure.Storage.Blobs;
@@ -105,7 +106,7 @@ namespace Back_End.Controllers
         // POST: api/Trees
         [HttpPost]
         [Consumes("multipart/form-data")]
-        public async Task<ActionResult<Tree>> PostTree([FromForm] TreePostRequestDTO request)
+        public async Task<ActionResult<TreeResponseDTO>> PostTree([FromForm] TreePostRequestDTO request)
         {
             // Upload the photo to Azure Blobs
             BlobContainerClient blobContainerClient = _blobServiceClient.GetBlobContainerClient("trees");
@@ -114,7 +115,7 @@ namespace Back_End.Controllers
             await blobClient.UploadAsync(request.Photo.OpenReadStream(), new BlobHttpHeaders() { ContentType = "image/png" });
 
             // Retrieve the user from the database
-            long userId = long.Parse(User.Claims.Where(claim => claim.Type == JwtRegisteredClaimNames.Sub).First().Value);
+            long userId = long.Parse(User.Claims.Where(claim => claim.Type == ClaimTypes.NameIdentifier).First().Value);
 
             IEnumerable<User> users = from user in _databaseContext.Users
                                       where user.Id == userId
@@ -136,7 +137,7 @@ namespace Back_End.Controllers
             _databaseContext.Trees.Add(tree);
             await _databaseContext.SaveChangesAsync();
 
-            return CreatedAtAction("GetTree", new { id = tree.Id }, tree);
+            return CreatedAtAction("GetTree", new { id = tree.Id }, TreeToDTO(tree));
         }
 
         // DELETE: api/Trees/5
