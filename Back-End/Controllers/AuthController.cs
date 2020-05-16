@@ -121,7 +121,7 @@ namespace Sample.Server.WebAuthenticator
             Dictionary<string, string> tokens = new Dictionary<string, string>
             {
                 { "access_token", new JwtSecurityTokenHandler().WriteToken(accessToken) },
-                { "expiration", expiration.ToString() },
+                { "expiration", expiration.ToString("o") },
                 { "refresh_token", refreshToken },
                 { "provider", provider }
             };
@@ -173,7 +173,7 @@ namespace Sample.Server.WebAuthenticator
                         Dictionary<string, string> token = new Dictionary<string, string>
                         {
                             { "access_token", new JwtSecurityTokenHandler().WriteToken(accessToken) },
-                            { "expiration", expiration.ToString() }
+                            { "expiration", expiration.ToString("o") }
                         };
 
                         return Ok(token);
@@ -189,7 +189,6 @@ namespace Sample.Server.WebAuthenticator
         private JwtSecurityToken IssueJwtToken(string userId, out DateTime expiration)
         {
             expiration = DateTime.UtcNow.AddHours(2);
-
 
             Claim[] claims = new Claim[] {
                 new Claim(JwtRegisteredClaimNames.Sub, userId),
