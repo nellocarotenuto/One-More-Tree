@@ -100,10 +100,10 @@ namespace Back_End
                     {
                         ValidateIssuer = true,
                         ValidateAudience = true,
+                        ValidateIssuerSigningKey = true,
                         ValidIssuer = Configuration["JWT_ISSUER"],
                         ValidAudience = Configuration["JWT_AUDIENCE"],
-                        IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(Configuration["JWT_SIGN_KEY"])),
-                        ClockSkew = TimeSpan.Zero
+                        IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(Configuration["JWT_SIGN_KEY"]))
                     };
                 })
                 .AddFacebook(options =>
