@@ -191,7 +191,7 @@ namespace Sample.Server.WebAuthenticator
             expiration = DateTime.UtcNow.AddHours(2);
 
             Claim[] claims = new Claim[] {
-                new Claim(JwtRegisteredClaimNames.Sub, userId),
+                new Claim(ClaimTypes.NameIdentifier, userId),
                 new Claim(JwtRegisteredClaimNames.Jti, Guid.NewGuid().ToString()),
                 new Claim(JwtRegisteredClaimNames.Iat, DateTime.UtcNow.ToString()),
             };

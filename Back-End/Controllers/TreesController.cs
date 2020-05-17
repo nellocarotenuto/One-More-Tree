@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Globalization;
-using System.IdentityModel.Tokens.Jwt;
 using System.Linq;
 using System.Security.Claims;
 using System.Threading.Tasks;
@@ -68,7 +67,7 @@ namespace Back_End.Controllers
         [HttpPut("{id}")]
         public async Task<IActionResult> PutTree(long id, TreePutRequestDTO request)
         {
-            long userId = long.Parse(User.Claims.Where(claim => claim.Type == JwtRegisteredClaimNames.Sub).First().Value);
+            long userId = long.Parse(User.Claims.Where(claim => claim.Type == ClaimTypes.NameIdentifier).First().Value);
             Tree tree = await _databaseContext.Trees.FindAsync(id);
 
             if (id != request.Id)
@@ -144,7 +143,7 @@ namespace Back_End.Controllers
         [HttpDelete("{id}")]
         public async Task<ActionResult<Tree>> DeleteTree(long id)
         {
-            long userId = long.Parse(User.Claims.Where(claim => claim.Type == JwtRegisteredClaimNames.Sub).First().Value);
+            long userId = long.Parse(User.Claims.Where(claim => claim.Type == ClaimTypes.NameIdentifier).First().Value);
             
             Tree tree = await _databaseContext.Trees.FindAsync(id);
             
