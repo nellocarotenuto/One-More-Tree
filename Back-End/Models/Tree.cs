@@ -28,6 +28,7 @@ namespace Back_End.Models
         [Required]
         public DateTime Date { get; set; }
 
-        public User User { get; set; }
+        [Required]
+        public virtual User User { get; set; }
     }
 }

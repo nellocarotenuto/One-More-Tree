@@ -20,6 +20,6 @@ namespace Back_End.Models
 
         public string FacebookId { get; set; }
 
-        public ICollection<Tree> Trees { get; set; }
+        public virtual ICollection<Tree> Trees { get; set; }
     }
 }

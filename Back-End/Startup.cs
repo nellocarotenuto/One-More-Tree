@@ -36,7 +36,7 @@ namespace Back_End
         {
             // Configure Database Context
             services.AddDbContext<DatabaseContext>(options => {
-                options.UseSqlServer(Configuration.GetConnectionString("DATABASE_CONNECTION_STRING"));
+                options.UseLazyLoadingProxies().UseSqlServer(Configuration.GetConnectionString("DATABASE_CONNECTION_STRING"));
             });
 
             // Configure Azure Blob Storage 
@@ -114,9 +114,7 @@ namespace Back_End
                 });
 
             // Add controllers
-            services.AddControllers().AddNewtonsoftJson(
-                options => options.SerializerSettings.ReferenceLoopHandling = Newtonsoft.Json.ReferenceLoopHandling.Ignore
-            );
+            services.AddControllers();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
