@@ -16,6 +16,7 @@ using Microsoft.IdentityModel.Tokens;
 using Newtonsoft.Json;
 
 using Back_End.Models;
+using System.Text.Json;
 
 namespace Sample.Server.WebAuthenticator
 {
@@ -139,10 +140,13 @@ namespace Sample.Server.WebAuthenticator
         
         [HttpPost]
         [Route("refresh/{provider}")]
-        public async Task<IActionResult> Refresh(string provider, [FromBody] string refreshToken)
+        [Consumes("application/json")]
+        public async Task<IActionResult> Refresh(string provider, [FromBody] JsonElement payload)
         {
+            string refreshToken = payload.GetString("refresh_token");
+
             // Check that the provider is registered and a token has been provided
-            if (!_providers.Contains(provider, StringComparer.OrdinalIgnoreCase) || refreshToken == string.Empty)
+            if (!_providers.Contains(provider, StringComparer.OrdinalIgnoreCase) || refreshToken == null || refreshToken == string.Empty)
             {
                 return BadRequest();
             }
