@@ -23,9 +23,15 @@ namespace Back_End.Validators
                 return ValidationResult.Success;
             }
 
-            Stream descriptionStream = new MemoryStream(Encoding.UTF8.GetBytes(description));
+            // Return error if the description exceeds Content Moderator limits
+            if (description.Length > 1024)
+            {
+                return new ValidationResult("The description is too long.");
+            }
 
             // Check that the description isn't inappropriate
+            Stream descriptionStream = new MemoryStream(Encoding.UTF8.GetBytes(description));
+
             ContentModeratorClient contentModeratorClient = validationContext.GetService<ContentModeratorClient>();
             Screen textScreen = contentModeratorClient.TextModeration.ScreenText("text/plain", descriptionStream);
 

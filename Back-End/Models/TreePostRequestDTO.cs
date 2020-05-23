@@ -17,7 +17,6 @@ namespace Back_End.Models
         [TreePhoto]
         public IFormFile Photo { get; set; }
 
-        [StringLength(1024, ErrorMessage = "The description is too long.")]
         [TreeDescription]
         public string Description { get; set; }
 
