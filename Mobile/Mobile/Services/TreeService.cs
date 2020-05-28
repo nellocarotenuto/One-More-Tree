@@ -1,4 +1,4 @@
-﻿using Front_End_Mobile.Models;
+﻿using Mobile.Models;
 using Newtonsoft.Json.Linq;
 using System;
 using System.Globalization;
@@ -9,7 +9,7 @@ using System.Net.Http.Headers;
 using System.Threading.Tasks;
 using Xamarin.Essentials;
 
-namespace Front_End_Mobile.Services
+namespace Mobile.Services
 {
     public class TreeService
     {

@@ -7,8 +7,8 @@
     <ProjectTypeGuids>{EFBA0AD7-5A72-4C68-AF49-83D382785DCF};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
     <TemplateGuid>{6968b3a4-1835-46a3-ac5c-1ae33b475983}</TemplateGuid>
     <OutputType>Library</OutputType>
-    <RootNamespace>Front_End_Mobile.Droid</RootNamespace>
-    <AssemblyName>Front-End Mobile.Android</AssemblyName>
+    <RootNamespace>Mobile.Droid</RootNamespace>
+    <AssemblyName>Mobile.Android</AssemblyName>
     <Deterministic>True</Deterministic>
     <AndroidApplication>True</AndroidApplication>
     <AndroidResgenFile>Resources\Resource.designer.cs</AndroidResgenFile>
@@ -92,9 +92,9 @@
     <AndroidResource Include="Resources\drawable\xamarin_logo.png" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\Front-End Mobile\Front-End Mobile.csproj">
-      <Project>{97FC38F1-CF0D-48EE-9113-5CDB1D889947}</Project>
-      <Name>Front-End Mobile</Name>
+    <ProjectReference Include="..\Mobile\Mobile.csproj">
+      <Project>{066A07A1-1CE5-48AF-97E5-28858B29E5E8}</Project>
+      <Name>Mobile</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath)\Xamarin\Android\Xamarin.Android.CSharp.targets" />

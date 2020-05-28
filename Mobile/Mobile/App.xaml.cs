@@ -1,10 +1,10 @@
 ﻿using Xamarin.Forms;
-using Front_End_Mobile.Views;
-using Front_End_Mobile.Models;
+using Mobile.Views;
+using Mobile.Models;
 using Autofac;
-using Front_End_Mobile.Services;
+using Mobile.Services;
 
-namespace Front_End_Mobile
+namespace Mobile
 {
     public partial class App : Application
     {

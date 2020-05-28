@@ -1,4 +1,4 @@
-﻿using Front_End_Mobile.Models;
+﻿using Mobile.Models;
 using SQLite;
 using SQLiteNetExtensionsAsync.Extensions;
 using System;
@@ -7,7 +7,7 @@ using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace Front_End_Mobile.Services
+namespace Mobile.Services
 {
     public class DatabaseService
     {

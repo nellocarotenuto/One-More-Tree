@@ -2,7 +2,7 @@
 using SQLite;
 using SQLiteNetExtensions.Attributes;
 
-namespace Front_End_Mobile.Models
+namespace Mobile.Models
 {
     [Table("Trees")]
     public class Tree

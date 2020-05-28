@@ -7,9 +7,9 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BackEnd", "BackEnd\BackEnd.
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Front-End Web", "Front-End Web\Front-End Web.csproj", "{2510C7DF-CACA-4A1C-AED8-DC859299E84F}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Front-End Mobile.Android", "Front-End Mobile\Front-End Mobile.Android\Front-End Mobile.Android.csproj", "{5AC8D185-3FD8-4B80-AED5-0AA0E2F5F4C7}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Mobile.Android", "Mobile\Mobile.Android\Mobile.Android.csproj", "{5AC8D185-3FD8-4B80-AED5-0AA0E2F5F4C7}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Front-End Mobile", "Front-End Mobile\Front-End Mobile\Front-End Mobile.csproj", "{066A07A1-1CE5-48AF-97E5-28858B29E5E8}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Mobile", "Mobile\Mobile\Mobile.csproj", "{066A07A1-1CE5-48AF-97E5-28858B29E5E8}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{BB83F6BE-2E0C-4AD0-BAE0-B01A34ABB27B}"
 	ProjectSection(SolutionItems) = preProject

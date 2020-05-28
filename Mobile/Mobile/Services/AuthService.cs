@@ -7,7 +7,7 @@ using System.Text;
 using System.Threading.Tasks;
 using Xamarin.Essentials;
 
-namespace Front_End_Mobile.Services
+namespace Mobile.Services
 {
     public class AuthService
     {
