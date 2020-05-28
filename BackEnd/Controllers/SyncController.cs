@@ -11,7 +11,7 @@ using Microsoft.Extensions.Configuration;
 
 using Dapper;
 
-namespace Back_End.Controllers
+namespace BackEnd.Controllers
 {
     [Route("api/trees/sync")]
     [ApiController]

@@ -1,15 +1,13 @@
-﻿using AzureMapsToolkit;
-using AzureMapsToolkit.Search;
-using Microsoft.Extensions.DependencyInjection;
-using System;
-using System.Collections.Generic;
+﻿using System;
 using System.ComponentModel.DataAnnotations;
-using System.Linq;
 using System.Reflection;
 using System.Text.RegularExpressions;
-using System.Threading.Tasks;
 
-namespace Back_End.Validators
+using AzureMapsToolkit;
+using AzureMapsToolkit.Search;
+using Microsoft.Extensions.DependencyInjection;
+
+namespace BackEnd.Validators
 {
     public class TreeLocation : ValidationAttribute
     {

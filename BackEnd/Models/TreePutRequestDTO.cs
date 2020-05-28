@@ -4,9 +4,9 @@ using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Threading.Tasks;
 
-using Back_End.Validators;
+using BackEnd.Validators;
 
-namespace Back_End.Models
+namespace BackEnd.Models
 {
     public class TreePutRequestDTO
     {

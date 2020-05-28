@@ -7,9 +7,9 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
-using Back_End.Validators;
+using BackEnd.Validators;
 
-namespace Back_End.Models
+namespace BackEnd.Models
 {
     public class TreePostRequestDTO
     {

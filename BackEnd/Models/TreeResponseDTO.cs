@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace Back_End.Models
+namespace BackEnd.Models
 {
     public class TreeResponseDTO
     {

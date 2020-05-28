@@ -1,7 +1,7 @@
 ﻿using System;
 using System.ComponentModel.DataAnnotations;
 
-namespace Back_End.Models
+namespace BackEnd.Models
 {
     public class Tree
     {

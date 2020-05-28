@@ -15,10 +15,10 @@ using Microsoft.IdentityModel.Tokens;
 
 using Newtonsoft.Json;
 
-using Back_End.Models;
+using BackEnd.Models;
 using System.Text.Json;
 
-namespace Sample.Server.WebAuthenticator
+namespace BackEnd.Controllers
 {
     
     [ApiController]

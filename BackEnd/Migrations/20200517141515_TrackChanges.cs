@@ -2,7 +2,7 @@
 using System;
 using System.IO;
 
-namespace Back_End.Migrations
+namespace BackEnd.Migrations
 {
     public partial class TrackChanges : Migration
     {

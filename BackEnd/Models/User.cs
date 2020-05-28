@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 
-namespace Back_End.Models
+namespace BackEnd.Models
 {
     public class User
     {

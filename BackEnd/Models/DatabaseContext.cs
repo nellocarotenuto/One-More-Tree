@@ -5,7 +5,7 @@ using System.Threading.Tasks;
 
 using Microsoft.EntityFrameworkCore;
 
-namespace Back_End.Models
+namespace BackEnd.Models
 {
     public class DatabaseContext : DbContext
     {

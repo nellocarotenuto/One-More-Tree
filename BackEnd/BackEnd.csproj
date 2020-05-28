@@ -2,7 +2,7 @@
 
   <PropertyGroup>
     <TargetFramework>netcoreapp3.1</TargetFramework>
-    <RootNamespace>Back_End</RootNamespace>
+    <RootNamespace>BackEnd</RootNamespace>
     <UserSecretsId>460ec60a-3f58-441d-924f-aabc78652a65</UserSecretsId>
   </PropertyGroup>
 

@@ -18,9 +18,9 @@ using Microsoft.Extensions.Hosting;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.Rest;
 
-using Back_End.Models;
+using BackEnd.Models;
 
-namespace Back_End
+namespace BackEnd
 {
     public class Startup
     {
