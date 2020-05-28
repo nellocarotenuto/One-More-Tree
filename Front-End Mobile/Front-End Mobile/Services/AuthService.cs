@@ -1,5 +1,6 @@
 ﻿using Newtonsoft.Json.Linq;
 using System;
+using System.Net;
 using System.Net.Http;
 using System.Security.Authentication;
 using System.Text;
@@ -78,7 +79,7 @@ namespace Front_End_Mobile.Services
                 new StringContent(payload.ToString(), Encoding.UTF8, "application/json"));
 
             // Check if the refresh token has expired
-            if (response.StatusCode == System.Net.HttpStatusCode.Unauthorized)
+            if (response.StatusCode == HttpStatusCode.Unauthorized)
             {
                 throw new AuthenticationException();
             }
@@ -98,7 +99,7 @@ namespace Front_End_Mobile.Services
             Preferences.Set("expiration", expiration);
         }
 
-        private bool IsAuthenticated()
+        public bool IsAuthenticated()
         {
             if (Preferences.ContainsKey("access_token") && 
                 Preferences.ContainsKey("refresh_token") &&
