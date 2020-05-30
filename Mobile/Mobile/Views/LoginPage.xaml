@@ -1,0 +1,42 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<views:BasePage xmlns="http://xamarin.com/schemas/2014/forms"
+                xmlns:views="clr-namespace:Mobile.Views"
+                xmlns:viewmodels="clr-namespace:Mobile.ViewModels"
+                xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+                xmlns:d="http://xamarin.com/schemas/2014/forms/design"
+                xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+                mc:Ignorable="d"
+                x:Class="Mobile.Views.LoginPage">
+
+    <views:BasePage.BindingContext>
+        <viewmodels:LoginViewModel/>
+    </views:BasePage.BindingContext>
+    
+    <views:BasePage.Content>
+        <ContentView HorizontalOptions="Center"
+                     VerticalOptions="Center">
+        
+            <StackLayout Padding="12,0,12,12"
+                         Spacing="16">
+                <StackLayout Orientation="Horizontal"
+                             VerticalOptions="Center"
+                             HorizontalOptions="Center">
+                    <Label FontFamily="{StaticResource MaterialFontFamily}"
+                           Text="&#x000f0531;"
+                           FontSize="Header"
+                           TextColor="{StaticResource PrimaryColor}"/>
+                    <Label Text="One More Tree"
+                           TextColor="{StaticResource PrimaryColor}"
+                           FontSize="Title"
+                           VerticalOptions="Center"
+                           Padding="0,0,24,0"/>
+                </StackLayout>
+                <Label Text="Log in with your social accounts" />
+                <Button Text="Facebook" Command="{Binding FacebookCommand}" BackgroundColor="#3b5998" TextColor="White" />
+            </StackLayout>
+            
+        </ContentView>
+
+    </views:BasePage.Content>
+    
+</views:BasePage>
