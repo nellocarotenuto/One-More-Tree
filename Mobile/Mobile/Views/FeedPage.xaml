@@ -1,0 +1,90 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<views:BasePage xmlns="http://xamarin.com/schemas/2014/forms"
+                xmlns:views="clr-namespace:Mobile.Views"
+                xmlns:viewmodels="clr-namespace:Mobile.ViewModels"
+                xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+                xmlns:d="http://xamarin.com/schemas/2014/forms/design"
+                xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+                mc:Ignorable="d"
+                x:Class="Mobile.Views.FeedPage">
+
+    <views:BasePage.BindingContext>
+        <viewmodels:FeedViewModel/>
+    </views:BasePage.BindingContext>
+    
+    <views:BasePage.Title>Feed</views:BasePage.Title>
+    
+    <views:BasePage.Content>
+
+        <AbsoluteLayout VerticalOptions="FillAndExpand" HorizontalOptions="FillAndExpand">
+
+            <RefreshView IsRefreshing="{Binding IsRefreshing}"
+                         Command="{Binding RefreshCommand}"
+                         RefreshColor="{StaticResource PrimaryColor}">
+
+                <CollectionView ItemsSource="{Binding Trees}">
+                    <CollectionView.ItemTemplate>
+                        <DataTemplate>
+                            <StackLayout BackgroundColor="{StaticResource SecondaryColor}">
+                                <Image Source="{Binding Photo}"
+                                       HeightRequest="400"
+                                       Aspect="AspectFill" />
+                                <StackLayout Orientation="Horizontal"
+                                             HorizontalOptions="StartAndExpand"
+                                             VerticalOptions="Center"
+                                             Padding="16">
+                                    <Frame CornerRadius="100"
+                                           HeightRequest="48"
+                                           WidthRequest="48"
+                                           IsClippedToBounds="True"
+                                           Padding="0"
+                                           VerticalOptions="Start"
+                                           MinimumWidthRequest="48"
+                                           MinimumHeightRequest="48"
+                                           HasShadow="False">
+                                        <Image Source="{Binding User.Picture}"
+                                               Aspect="AspectFill" />
+                                    </Frame>
+
+                                    <StackLayout Orientation="Vertical"
+                                                 Margin="8,0,0,0"
+                                                 Spacing="0">
+                                        <StackLayout Orientation="Vertical"
+                                                     VerticalOptions="Center"
+                                                     HeightRequest="48"
+                                                     Spacing="0"
+                                                     Margin="0,0,0,8">
+                                            <Label Text="{Binding User.Name}"
+                                                   FontSize="Body"
+                                                   Margin="0" />
+                                            <Label Text="{Binding Date, StringFormat='{0:d MMMM yyyy, HH:mm}'}"
+                                                   FontSize="Micro" />
+                                            <Label Text="{Binding Location}"
+                                                   FontSize="Micro" />
+                                        </StackLayout>
+
+                                        <Label IsVisible="{Binding HasDescription}"
+                                               Text="{Binding Description}" />
+                                    </StackLayout>
+                                </StackLayout>
+
+                            </StackLayout>
+                        </DataTemplate>
+                    </CollectionView.ItemTemplate>
+                </CollectionView>
+            </RefreshView>
+
+            <Button x:Name="yourname"
+                    FontFamily="{StaticResource MaterialFontFamily}"
+                    Text="&#x000f0edb;"
+                    IsVisible="True"
+                    AbsoluteLayout.LayoutFlags="PositionProportional"
+                    AbsoluteLayout.LayoutBounds="1, 1, AutoSize, AutoSize"
+                    Style="{StaticResource FABPrimary}"
+                    Padding="-1,0,0,0"/>
+
+        </AbsoluteLayout>
+        
+    </views:BasePage.Content>
+    
+</views:BasePage>
