@@ -15,7 +15,6 @@ namespace BackEnd.Controllers
 {
     [Route("api/trees/sync")]
     [ApiController]
-    [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
     public class SyncController : ControllerBase
     {
         private static readonly string procedure = "OneMoreTreeContext.dbo.sync_trees";
