@@ -3,6 +3,7 @@ using Mobile.Views;
 using Mobile.Models;
 using Autofac;
 using Mobile.Services;
+using System;
 
 namespace Mobile
 {
@@ -20,6 +21,13 @@ namespace Mobile
         {
             InitializeComponent();
             InitializeServices();
+
+            MainPage = new NavigationPage(new MainPage());
+
+            if (!AuthService.IsAuthenticated())
+            {
+                MainPage.Navigation.PushModalAsync(new LoginPage());
+            }
         }
 
         // Inizialize the services of the app
@@ -45,5 +53,6 @@ namespace Mobile
         protected override void OnResume()
         {
         }
+
     }
 }
