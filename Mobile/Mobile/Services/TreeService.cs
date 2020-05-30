@@ -19,10 +19,6 @@ namespace Mobile.Services
         public async Task Synchronize()
         {
             HttpClient httpClient = new HttpClient();
-
-            // Set the access token
-            httpClient.DefaultRequestHeaders.Authorization = 
-                new AuthenticationHeaderValue("Bearer", await App.AuthService.GetAccessToken());
             
             // Call API to syncronize with the server
             HttpResponseMessage response = 
