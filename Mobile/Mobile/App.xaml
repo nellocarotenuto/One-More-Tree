@@ -8,11 +8,53 @@
 
     <Application.Resources>
         <ResourceDictionary>
-            <!--Global Styles-->
-            <Color x:Key="NavigationPrimary">#2196F3</Color>
-            <Style TargetType="NavigationPage">
-                <Setter Property="BarBackgroundColor" Value="{StaticResource NavigationPrimary}" />
-                <Setter Property="BarTextColor" Value="White" />
+            <Color x:Key="PrimaryColor">#4caf50</Color>
+            <Color x:Key="PrimaryColorLight">#c8e6c9</Color>
+            <Color x:Key="PrimaryColorDark">#388e3c</Color>
+            <Color x:Key="PrimaryColorText">#ffffff</Color>
+            <Color x:Key="SecondaryColor">#fafafa</Color>
+            <Color x:Key="SecondaryColorLight">#ffffff</Color>
+            <Color x:Key="SecondaryColorDark">#c7c7c7</Color>
+            <Color x:Key="SecondaryColorText">#4CAF50</Color>
+            <Color x:Key="BodyColorBackground">#f0f0f0</Color>
+            <Color x:Key="BodyColorTextPrimary">#212121</Color>
+            <Color x:Key="BodyColorTextSecondary">#757575</Color>
+
+            <OnPlatform x:Key="MaterialFontFamily" x:TypeArguments="x:String">
+                <On Platform="Android" Value="materialdesignicons-webfont.ttf#Material Design Icons" />
+            </OnPlatform>
+            
+            <Style TargetType="{x:Type NavigationPage}">
+                <Setter Property="BarBackgroundColor"
+                        Value="{StaticResource PrimaryColor}" />
+                <Setter Property="BarTextColor"
+                        Value="{StaticResource PrimaryColorText}" />
+            </Style>
+
+            <Style TargetType="{x:Type TabbedPage}">
+                <Setter Property="BarBackgroundColor"
+                        Value="{StaticResource PrimaryColor}"/>
+                <Setter Property="BarTextColor"
+                        Value="{StaticResource PrimaryColorText}"/>
+            </Style>
+
+            <Style TargetType="{x:Type ContentPage}"
+                   ApplyToDerivedTypes="True">
+                <Setter Property="BackgroundColor"
+                        Value="{StaticResource BodyColorBackground}" />
+            </Style>
+
+            <Style x:Key="FABPrimary" TargetType="Button">
+                <Setter Property="CornerRadius" Value="100"/>
+                <Setter Property="BackgroundColor" Value="{StaticResource PrimaryColor}"/>
+                <Setter Property="HeightRequest" Value="55"/>
+                <Setter Property="WidthRequest" Value="55"/>
+                <Setter Property="HorizontalOptions" Value="CenterAndExpand"/>
+                <Setter Property="VerticalOptions" Value="CenterAndExpand"/>
+                <Setter Property="Padding" Value="15"/>
+                <Setter Property="Margin" Value="0,0,15,15"/>
+                <Setter Property="FontSize" Value="Large"/>
+                <Setter Property="TextColor" Value="{StaticResource PrimaryColorText}"/>
             </Style>
         </ResourceDictionary>
     </Application.Resources>
