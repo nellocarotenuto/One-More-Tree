@@ -1,4 +1,5 @@
 ﻿using System;
+using Plugin.Media.Abstractions;
 using SQLite;
 using SQLiteNetExtensions.Attributes;
 
@@ -30,5 +31,11 @@ namespace Mobile.Models
 
         [ManyToOne(CascadeOperations = CascadeOperation.CascadeInsert | CascadeOperation.CascadeRead)]
         public User User { get; set; }
+
+        [Ignore]
+        public string Location { get => string.Format("{0}, {1}", City, State); }
+
+        [Ignore]
+        public bool HasDescription { get => Description != null && Description != string.Empty; }
     }
 }
