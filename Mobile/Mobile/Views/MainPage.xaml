@@ -1,15 +1,21 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
-<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+<TabbedPage xmlns="http://xamarin.com/schemas/2014/forms"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              xmlns:d="http://xamarin.com/schemas/2014/forms/design"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:views="clr-namespace:Mobile.Views"
              mc:Ignorable="d"
              x:Class="Mobile.Views.MainPage">
-    <ContentPage.Content>
-        <StackLayout>
-            <Label Text="Welcome to Xamarin.Forms!"
-                VerticalOptions="CenterAndExpand" 
-                HorizontalOptions="CenterAndExpand" />
-        </StackLayout>
-    </ContentPage.Content>
-</ContentPage>
+    
+    <TabbedPage.Title>One More Tree</TabbedPage.Title>
+
+    <TabbedPage.ToolbarItems>
+        <ToolbarItem Text="About"
+                     Order="Secondary"
+                     Priority="0" />
+    </TabbedPage.ToolbarItems>
+
+    <views:FeedPage/>
+    <views:MapPage/>
+    
+</TabbedPage>
