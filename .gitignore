@@ -338,3 +338,6 @@ ASALocalRun/
 
 # BeatPulse healthcheck temp database
 healthchecksdb
+
+# Exclude Android strings
+/Mobile/Mobile.Android/Resources/values/strings.xml
