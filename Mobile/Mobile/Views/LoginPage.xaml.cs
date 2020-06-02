@@ -17,25 +17,6 @@ namespace Mobile.Views
         public LoginPage()
         {
             InitializeComponent();
-
-            LoginViewModel viewModel = (LoginViewModel) this.BindingContext;
-
-            viewModel.PropertyChanged += (sender, args) => {
-                if (!args.PropertyName.Equals("IsAuthenticated"))
-                {
-                    return;
-                }
-                
-                if (viewModel.IsAuthenticated)
-                {
-                    Navigation.PopModalAsync();
-                }
-            };
-        }
-
-        protected override bool OnBackButtonPressed()
-        {
-            return true;
         }
 
     }
