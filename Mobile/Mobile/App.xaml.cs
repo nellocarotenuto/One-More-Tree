@@ -19,11 +19,6 @@ namespace Mobile
             InitializeServices();
 
             MainPage = new NavigationPage(new MainPage());
-
-            if (!AuthService.IsAuthenticated())
-            {
-                MainPage.Navigation.PushModalAsync(new LoginPage());
-            }
         }
 
         // Inizialize the services of the app
