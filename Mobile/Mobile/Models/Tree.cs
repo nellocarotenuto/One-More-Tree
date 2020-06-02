@@ -2,6 +2,7 @@
 using Plugin.Media.Abstractions;
 using SQLite;
 using SQLiteNetExtensions.Attributes;
+using Xamarin.Forms.Maps;
 
 namespace Mobile.Models
 {
@@ -31,6 +32,9 @@ namespace Mobile.Models
 
         [ManyToOne(CascadeOperations = CascadeOperation.CascadeInsert | CascadeOperation.CascadeRead)]
         public User User { get; set; }
+
+        [Ignore]
+        public Position Position { get => new Position(Latitude, Longitude); }
 
         [Ignore]
         public string Location { get => string.Format("{0}, {1}", City, State); }
