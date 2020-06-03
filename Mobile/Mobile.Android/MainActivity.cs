@@ -4,19 +4,21 @@ using Android.Content;
 using Android.Content.PM;
 using Android.OS;
 using Android.Runtime;
-using Android.Widget;
 
 namespace Mobile.Droid
 {
     [Activity(Label = "One More Tree", Icon = "@mipmap/icon", Theme = "@style/MainTheme", MainLauncher = true, ScreenOrientation = ScreenOrientation.Portrait)]
     public class MainActivity : global::Xamarin.Forms.Platform.Android.FormsAppCompatActivity
     {
-        const int RequestLocationId = 0;
+        const int PermissionsRequestId = 1;
 
-        readonly string[] LocationPermissions =
+        readonly string[] Permissions =
         {
             Manifest.Permission.AccessCoarseLocation,
-            Manifest.Permission.AccessFineLocation
+            Manifest.Permission.AccessFineLocation,
+            Manifest.Permission.Camera,
+            Manifest.Permission.ReadExternalStorage,
+            Manifest.Permission.WriteExternalStorage
         };
 
         protected override void OnCreate(Bundle savedInstanceState)
@@ -38,9 +40,13 @@ namespace Mobile.Droid
 
             if ((int)Build.VERSION.SdkInt >= 23)
             {
-                if (CheckSelfPermission(Manifest.Permission.AccessFineLocation) != Permission.Granted)
+                foreach (string permission in Permissions)
                 {
-                    RequestPermissions(LocationPermissions, RequestLocationId);
+                    if (CheckSelfPermission(permission) != Permission.Granted)
+                    {
+                        RequestPermissions(Permissions, PermissionsRequestId);
+                        break;
+                    }
                 }
             }
         }
