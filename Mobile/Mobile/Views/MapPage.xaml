@@ -19,6 +19,22 @@
         <maps:Map 
             MapType="Street"
             ItemsSource="{Binding Trees}">
+            
+            <x:Arguments>
+                <maps:MapSpan>
+                    <x:Arguments>
+                        <maps:Position>
+                            <x:Arguments>
+                                <x:Double>42</x:Double>
+                                <x:Double>12.5</x:Double>
+                            </x:Arguments>
+                        </maps:Position>
+                        <x:Double>14</x:Double>
+                        <x:Double>12</x:Double>
+                    </x:Arguments>
+                </maps:MapSpan>
+            </x:Arguments>
+            
             <maps:Map.ItemTemplate>
                 <DataTemplate>
                     <maps:Pin
