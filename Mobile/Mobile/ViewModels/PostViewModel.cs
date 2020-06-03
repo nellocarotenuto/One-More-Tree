@@ -12,11 +12,23 @@ namespace Mobile.ViewModels
 {
     class PostViewModel : BaseViewModel
     {
-        public PostViewModel(String imagePath)
+        public PostViewModel()
         {
-            ImagePath = imagePath;
+            IsBusy = true;
         }
 
-        public String ImagePath { get; set; }
+        private string _imagePath;
+
+        public string ImagePath {
+            get
+            {
+                return _imagePath;
+            }
+            set
+            {
+                _imagePath = value;
+                IsBusy = false;
+            }
+        }
     }
 }

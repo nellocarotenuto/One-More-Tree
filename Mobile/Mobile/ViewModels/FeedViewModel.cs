@@ -90,47 +90,60 @@ namespace Mobile.ViewModels
 
         private async Task GetMedia(string mode)
         {
+            PostPage postPage = new PostPage();
+            PostViewModel postViewModel = new PostViewModel();
+            postPage.BindingContext = postViewModel;
+
+            await Application.Current.MainPage.Navigation.PushAsync(postPage);
+
             MediaFile photo = null;
 
-            if ("Camera".Equals(mode))
+            try
             {
-                if (!CrossMedia.Current.IsCameraAvailable || !CrossMedia.Current.IsTakePhotoSupported)
+                if ("Camera".Equals(mode))
                 {
-                    await DisplayAlertAsync("No Camera");
-                    return;
-                }
+                    if (!CrossMedia.Current.IsCameraAvailable || !CrossMedia.Current.IsTakePhotoSupported)
+                    {
+                        await DisplayAlertAsync("No camera detected.");
+                        return;
+                    }
 
-                photo = await CrossMedia.Current.TakePhotoAsync(new StoreCameraMediaOptions
+                    photo = await CrossMedia.Current.TakePhotoAsync(new StoreCameraMediaOptions
+                    {
+                        CompressionQuality = 92,
+                        DefaultCamera = CameraDevice.Front
+                    });
+                }
+                else if ("Gallery".Equals(mode))
                 {
-                    CompressionQuality = 92,
-                    DefaultCamera = CameraDevice.Front
-                });
+                    await CrossMedia.Current.Initialize();
+
+                    if (!CrossMedia.Current.IsPickPhotoSupported)
+                    {
+                        await DisplayAlertAsync("Photos not supported.");
+                        return;
+                    }
+
+                    photo = await CrossMedia.Current.PickPhotoAsync(new PickMediaOptions
+                    {
+                        CompressionQuality = 92,
+                    });
+                }
             }
-            else if ("Gallery".Equals(mode))
+            catch (MediaPermissionException)
             {
-                await CrossMedia.Current.Initialize();
-
-                if (!CrossMedia.Current.IsPickPhotoSupported)
-                {
-                    await DisplayAlertAsync("Photos Not Supported");
-                    return;
-                }
-
-                photo = await CrossMedia.Current.PickPhotoAsync(new PickMediaOptions
-                {
-                    CompressionQuality = 92,
-                });
+                await Application.Current.MainPage.Navigation.PopAsync();
+                await DisplayAlertAsync("Please allow camera and storage permissions in app settings to upload a new post.");
+                return;
             }
-                
+            
             if (photo == null)
             {
+                await Application.Current.MainPage.Navigation.PopAsync();
                 return;
-            }   
+            }
 
-            PostPage postPage = new PostPage();
-            postPage.BindingContext = new PostViewModel(photo.Path);
-
-            await App.Current.MainPage.Navigation.PushAsync(postPage);
+            postViewModel.ImagePath = photo.Path;
         }
     }
 }
