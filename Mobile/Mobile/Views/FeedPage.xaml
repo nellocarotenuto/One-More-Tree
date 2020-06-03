@@ -2,11 +2,13 @@
 <views:BasePage xmlns="http://xamarin.com/schemas/2014/forms"
                 xmlns:views="clr-namespace:Mobile.Views"
                 xmlns:viewmodels="clr-namespace:Mobile.ViewModels"
+                xmlns:behaviors="clr-namespace:Mobile.Controls.Behaviors"
                 xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
                 xmlns:d="http://xamarin.com/schemas/2014/forms/design"
                 xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
                 mc:Ignorable="d"
-                x:Class="Mobile.Views.FeedPage">
+                x:Class="Mobile.Views.FeedPage"
+                x:Name="Feed">
 
     <views:BasePage.BindingContext>
         <viewmodels:FeedViewModel/>
@@ -74,15 +76,23 @@
                 </CollectionView>
             </RefreshView>
 
-            <Button x:Name="yourname"
+            <Button 
                     FontFamily="{StaticResource MaterialFontFamily}"
                     Text="&#x000f0edb;"
                     IsVisible="True"
                     AbsoluteLayout.LayoutFlags="PositionProportional"
                     AbsoluteLayout.LayoutBounds="1, 1, AutoSize, AutoSize"
                     Style="{StaticResource FABPrimary}"
-                    Padding="-1,0,0,0"/>
-
+                    Padding="-1,0,0,0" 
+                    Command="{Binding PostCommand}"
+                    CommandParameter="Camera">
+                <Button.Behaviors>
+                    <behaviors:LongPressBehavior 
+                        Command="{Binding Path=BindingContext.PostCommand, Source={x:Reference Feed}}"
+                        CommandParameter="Gallery"/>
+                </Button.Behaviors>
+            </Button>
+            
         </AbsoluteLayout>
         
     </views:BasePage.Content>
