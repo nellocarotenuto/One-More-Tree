@@ -3,6 +3,8 @@ using Mobile.Views;
 using Mobile.Models;
 using Mobile.Services;
 using System;
+using Mobile.ViewModels;
+using Xamarin.Essentials;
 
 namespace Mobile
 {
@@ -18,7 +20,17 @@ namespace Mobile
             InitializeComponent();
             InitializeServices();
 
-            MainPage = new NavigationPage(new MainPage());
+            MainPage mainPage = new MainPage();
+
+            FeedPage feedPage = new FeedPage();
+            feedPage.BindingContext = new FeedViewModel();
+            mainPage.Children.Add(feedPage);
+
+            MapPage mapPage = new MapPage();
+            mapPage.BindingContext = new MapViewModel();
+            mainPage.Children.Add(mapPage);
+
+            MainPage = new NavigationPage(mainPage);
         }
 
         // Inizialize the services of the app

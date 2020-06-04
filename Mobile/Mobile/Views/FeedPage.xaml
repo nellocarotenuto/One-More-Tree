@@ -1,7 +1,6 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 <views:BasePage xmlns="http://xamarin.com/schemas/2014/forms"
                 xmlns:views="clr-namespace:Mobile.Views"
-                xmlns:viewmodels="clr-namespace:Mobile.ViewModels"
                 xmlns:behaviors="clr-namespace:Mobile.Controls.Behaviors"
                 xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
                 xmlns:d="http://xamarin.com/schemas/2014/forms/design"
@@ -10,10 +9,6 @@
                 x:Class="Mobile.Views.FeedPage"
                 x:Name="Feed">
 
-    <views:BasePage.BindingContext>
-        <viewmodels:FeedViewModel/>
-    </views:BasePage.BindingContext>
-    
     <views:BasePage.Title>Feed</views:BasePage.Title>
     
     <views:BasePage.Content>
@@ -59,7 +54,7 @@
                                             <Label Text="{Binding User.Name}"
                                                    FontSize="Body"
                                                    Margin="0" />
-                                            <Label Text="{Binding Date, StringFormat='{0:d MMMM yyyy, HH:mm}'}"
+                                            <Label Text="{Binding DisplayDate}"
                                                    FontSize="Micro" />
                                             <Label Text="{Binding Location}"
                                                    FontSize="Micro" />

@@ -3,7 +3,6 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              xmlns:d="http://xamarin.com/schemas/2014/forms/design"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-             xmlns:views="clr-namespace:Mobile.Views"
              mc:Ignorable="d"
              x:Class="Mobile.Views.MainPage">
     
@@ -14,8 +13,5 @@
                      Order="Secondary"
                      Priority="0" />
     </TabbedPage.ToolbarItems>
-
-    <views:FeedPage/>
-    <views:MapPage/>
     
 </TabbedPage>
