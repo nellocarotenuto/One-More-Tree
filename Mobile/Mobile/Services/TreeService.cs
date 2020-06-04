@@ -75,13 +75,18 @@ namespace Mobile.Services
                 photo.Headers.ContentType = new MediaTypeHeaderValue("image/png");
 
                 HttpClient httpClient = new HttpClient();
-                
+
                 // Set the access token
                 httpClient.DefaultRequestHeaders.Authorization =
                     new AuthenticationHeaderValue("Bearer", await App.AuthService.GetAccessToken());
-                
+
                 MultipartFormDataContent form = new MultipartFormDataContent();
-                form.Add(new StringContent(description), "Description");
+
+                if (description != null && description.Trim() != string.Empty)
+                {
+                    form.Add(new StringContent(description), "Description");
+                }
+
                 form.Add(new StringContent($"{latitude.ToString("G", CultureInfo.InvariantCulture)}, {longitude.ToString("G", CultureInfo.InvariantCulture)}"), "Coordinates");
                 form.Add(photo, "Photo", filePath.Substring(filePath.LastIndexOf("/") + 1));
                 
