@@ -6,8 +6,49 @@
     <views:BasePage.Title>Post</views:BasePage.Title>
     
     <views:BasePage.Content>
-        
-        <AbsoluteLayout>
+
+        <AbsoluteLayout VerticalOptions="FillAndExpand"
+                        HorizontalOptions="FillAndExpand">
+
+            <StackLayout AbsoluteLayout.LayoutFlags="All"
+                         AbsoluteLayout.LayoutBounds="0,0,1,1">
+                <Image Source="{Binding ImagePath}"
+                       HeightRequest="400"
+                       Aspect="AspectFill" />
+
+                <StackLayout Padding="16"
+                             HorizontalOptions="Fill">
+                    <Label Text="Description (optional)"
+                           Margin="4,0,0,0"/>
+                    
+                    <Editor MaxLength="1024"
+                        Text="{Binding Description}"
+                        AutoSize="TextChanges"
+                        HorizontalOptions="Fill" />
+                </StackLayout>
+
+                
+            </StackLayout>
+
+            <Button 
+                    FontFamily="{StaticResource MaterialFontFamily}"
+                    Text="{Binding Location}"
+                    AbsoluteLayout.LayoutFlags="XProportional"
+                    AbsoluteLayout.LayoutBounds="1, 355, AutoSize, AutoSize"
+                    Style="{StaticResource GPS}"
+                    Command="{Binding EditLocationCommand}">
+            </Button>
+
+            <Button 
+                    FontFamily="{StaticResource MaterialFontFamily}"
+                    Text="&#x000f0552;"
+                    IsVisible="True"
+                    AbsoluteLayout.LayoutFlags="PositionProportional"
+                    AbsoluteLayout.LayoutBounds="1, 1, AutoSize, AutoSize"
+                    Style="{StaticResource FABPrimary}"
+                    Padding="0,0,0,0" 
+                    Command="{Binding UploadCommand}">
+            </Button>
 
             <ContentView IsVisible="{Binding IsBusy}"
                          AbsoluteLayout.LayoutFlags="All"

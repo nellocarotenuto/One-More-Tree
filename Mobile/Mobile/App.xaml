@@ -19,7 +19,9 @@
             <Color x:Key="BodyColorBackground">#f0f0f0</Color>
             <Color x:Key="BodyColorTextPrimary">#212121</Color>
             <Color x:Key="BodyColorTextSecondary">#757575</Color>
-
+            <Color x:Key="LabelTransparentBackground">#CC000000</Color>
+            <Color x:Key="LabelTransparentText">#ffffff</Color>
+            
             <OnPlatform x:Key="MaterialFontFamily" x:TypeArguments="x:String">
                 <On Platform="Android" Value="materialdesignicons-webfont.ttf#Material Design Icons" />
             </OnPlatform>
@@ -55,6 +57,19 @@
                 <Setter Property="Margin" Value="0,0,15,15"/>
                 <Setter Property="FontSize" Value="Large"/>
                 <Setter Property="TextColor" Value="{StaticResource PrimaryColorText}"/>
+            </Style>
+
+            <Style x:Key="GPS" TargetType="Button">
+                <Setter Property="CornerRadius" Value="100"/>
+                <Setter Property="BackgroundColor" Value="{StaticResource LabelTransparentBackground}"/>
+                <Setter Property="HeightRequest" Value="30"/>
+                <Setter Property="MinimumWidthRequest" Value="30"/>
+                <Setter Property="HorizontalOptions" Value="CenterAndExpand"/>
+                <Setter Property="VerticalOptions" Value="CenterAndExpand"/>
+                <Setter Property="Padding" Value="15,0"/>
+                <Setter Property="Margin" Value="0,0,15,15"/>
+                <Setter Property="FontSize" Value="Micro"/>
+                <Setter Property="TextColor" Value="{StaticResource LabelTransparentText}"/>
             </Style>
         </ResourceDictionary>
     </Application.Resources>
