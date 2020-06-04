@@ -94,8 +94,36 @@ namespace Mobile.Services
 
                 if (response.StatusCode == HttpStatusCode.BadRequest)
                 {
-                    throw new HttpRequestException("Please verify that the photo doesn't contain adult content," +
-                        "the descritpion isn't offensive and that the location is valid.");
+                    string message = string.Empty;
+
+                    dynamic json = JObject.Parse(await response.Content.ReadAsStringAsync());
+
+                    if (json.errors.Photo != null)
+                    {
+                        foreach (string error in json.errors.Photo)
+                        {
+                            
+                            message += $"{error}\n";
+                        }
+                    }
+
+                    if (json.errors.Description != null)
+                    {
+                        foreach (string error in json.errors.Description)
+                        {
+                            message += $"{error}\n";
+                        }
+                    }
+
+                    if (json.errors.Coordinates != null)
+                    {
+                        foreach (string error in json.errors.Coordinates)
+                        {
+                            message += $"{error}\n";
+                        }
+                    }
+
+                    throw new ArgumentException(message);
                 }
 
                 if (!response.IsSuccessStatusCode)
