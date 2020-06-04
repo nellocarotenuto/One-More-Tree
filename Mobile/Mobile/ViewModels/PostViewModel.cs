@@ -138,6 +138,7 @@ namespace Mobile.ViewModels
             if (_latitude == null || _longitude == null)
             {
                 await DisplayAlertAsync("Please set the location of this tree.");
+                return;
             }
 
             try
@@ -147,10 +148,13 @@ namespace Mobile.ViewModels
                 await App.TreeService.PostTree(_imagePath, (double)_latitude, (double)_longitude, Description);
                 await Application.Current.MainPage.Navigation.PopToRootAsync();
             }
-            catch (Exception e)
+            catch (ArgumentException exception)
             {
-                await DisplayAlertAsync("Please verify that your device is connected, the photo doesn't contain adult content," +
-                                        "the descritpion isn't offensive and that the location is valid.");
+                await DisplayAlertAsync(exception.Message);
+            }
+            catch
+            {
+                await DisplayAlertAsync("Something went wrong while communicating with the server.");
             }
             finally
             {
