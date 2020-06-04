@@ -7,6 +7,7 @@ using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Threading.Tasks;
 using System.Windows.Input;
+using Xamarin.Essentials;
 using Xamarin.Forms;
 
 namespace Mobile.ViewModels
@@ -37,30 +38,37 @@ namespace Mobile.ViewModels
         }
 
         public async Task RefreshFeed()
-        {
-            try
+        {         
+            IsRefreshing = true;
+
+            NetworkAccess networkAccess = Connectivity.NetworkAccess;
+            if (networkAccess == NetworkAccess.Internet)
             {
-                IsRefreshing = true;
-                await App.TreeService.Synchronize();
-
-                Trees.Clear();
-
-                List<Tree> trees = await App.Database.GetTreesAsync();
-                trees.Reverse();
-
-                foreach (Tree tree in trees)
+                try
                 {
-                    Trees.Add(tree);
+                    await App.TreeService.Synchronize();
+                }
+                catch
+                {
+                    await DisplayAlertAsync("Something went wrong while communicating with the server.");
                 }
             }
-            catch
+            else
             {
-                await DisplayAlertAsync("Something went wrong while communicating with the server.");
+                await DisplayAlertAsync("No Internet access, unable to refresh feed.");
             }
-            finally
+
+            Trees.Clear();
+
+            List<Tree> trees = await App.Database.GetTreesAsync();
+            trees.Reverse();
+
+            foreach (Tree tree in trees)
             {
-                IsRefreshing = false;
+                Trees.Add(tree);
             }
+            
+            IsRefreshing = false;
         }
 
         public async Task Post(string mode)
