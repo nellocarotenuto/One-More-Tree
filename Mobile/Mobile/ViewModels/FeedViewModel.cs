@@ -87,6 +87,7 @@ namespace Mobile.ViewModels
 
                     if (loginViewModel.IsAuthenticated)
                     {
+                        IsBusy = false;
                         await Application.Current.MainPage.Navigation.PopAsync();
                         await GetMedia(mode);
                     }
@@ -97,10 +98,9 @@ namespace Mobile.ViewModels
             }
             else
             {
+                IsBusy = false;
                 await GetMedia(mode);
             }
-
-            IsBusy = false;
         }
 
         private async Task GetMedia(string mode)
