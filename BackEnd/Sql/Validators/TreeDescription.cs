@@ -15,8 +15,8 @@ namespace BackEnd.Validators
         {
             string description = (string) value;
 
-            // Do not perform checks if the value is empty
-            if (description == string.Empty)
+            // Do not perform checks if the value is empty or null
+            if (description == null || description == string.Empty)
             {
                 return ValidationResult.Success;
             }
