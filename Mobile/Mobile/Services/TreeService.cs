@@ -31,7 +31,7 @@ namespace Mobile.Services
 
             dynamic json = JObject.Parse(await response.Content.ReadAsStringAsync());
             
-            if (json.Metadata.Sync.Version > Preferences.Get("db_version", 0))
+            if (json.Metadata.Sync.Version > Preferences.Get("db_version", 0) && json.Data != null)
             {
                 foreach (dynamic jsonTree in json.Data)
                 {                    
