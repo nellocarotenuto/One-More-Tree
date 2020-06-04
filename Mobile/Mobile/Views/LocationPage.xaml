@@ -10,6 +10,17 @@
 
     <views:BasePage.Title>Choose location</views:BasePage.Title>
 
+    <views:BasePage.ToolbarItems>
+        <ToolbarItem Order="Primary"
+                     Priority="0"
+                     Command="{Binding SetCurrentLocationCommand}">
+            <ToolbarItem.IconImageSource>
+                <FontImageSource FontFamily="{StaticResource MaterialFontFamily}"
+                                 Glyph="&#x000f01a4;" />
+            </ToolbarItem.IconImageSource>
+        </ToolbarItem>
+    </views:BasePage.ToolbarItems>
+
     <views:BasePage.Content>
 
         <ContentView Content="{Binding Map}"/>
