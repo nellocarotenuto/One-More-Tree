@@ -41,5 +41,8 @@ namespace Mobile.Models
 
         [Ignore]
         public bool HasDescription { get => Description != null && Description != string.Empty; }
+
+        [Ignore]
+        public string DisplayDate { get => Date.ToLocalTime().ToString("d MMMM yyyy, HH:mm"); }
     }
 }
