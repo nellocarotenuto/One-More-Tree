@@ -8,7 +8,7 @@ namespace Mobile.Controls.Behaviors
     class LongPressBehavior : Behavior<Button>
     {
         private readonly object _syncObject = new object();
-        private const int Duration = 1000;
+        private const int Duration = 500;
         private Timer _timer;
         private readonly int _duration;
         private volatile bool _isReleased;
