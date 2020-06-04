@@ -33,8 +33,13 @@ namespace Mobile.ViewModels
 
             RefreshCommand = new Command(async () => await RefreshFeed());
             PostCommand = new Command<string>(async (string mode) => await Post(mode));
+        }
 
-            RefreshCommand.Execute(null);
+        public override async void OnAppearing()
+        {
+            base.OnAppearing();
+
+            await RefreshFeed();
         }
 
         public async Task RefreshFeed()
