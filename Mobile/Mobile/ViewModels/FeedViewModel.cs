@@ -3,6 +3,7 @@ using Mobile.Views;
 using Plugin.Media;
 using Plugin.Media.Abstractions;
 using System;
+using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Threading.Tasks;
 using System.Windows.Input;
@@ -12,57 +13,27 @@ namespace Mobile.ViewModels
 {
     class FeedViewModel : BaseViewModel
     {
-        public bool isRefreshing;
+        public ObservableCollection<Tree> Trees { get; private set; }
+
+        private bool _isRefreshing;
 
         public bool IsRefreshing
         {
-            get => isRefreshing;
-            set => SetProperty(ref isRefreshing, value);
+            get => _isRefreshing;
+            set => SetProperty(ref _isRefreshing, value);
         }
         
         public ICommand RefreshCommand { get; }
         public ICommand PostCommand { get; }
-
-        public ObservableCollection<Tree> Trees { get; private set; }
 
         public FeedViewModel()
         {
             Trees = new ObservableCollection<Tree>();
 
             RefreshCommand = new Command(async () => await RefreshFeed());
+            PostCommand = new Command<string>(async (string mode) => await Post(mode));
+
             RefreshCommand.Execute(null);
-
-            PostCommand = new Command<string>(async (string mode) =>
-            {
-                if (!App.AuthService.IsAuthenticated())
-                {
-                    // First time so prompt for login
-                    LoginPage loginPage = new LoginPage();
-                    LoginViewModel loginViewModel = new LoginViewModel();
-
-                    loginViewModel.PropertyChanged += async (sender, args) =>
-                    {
-                        if (!args.PropertyName.Equals("IsAuthenticated"))
-                        {
-                            return;
-                        }
-
-                        if (loginViewModel.IsAuthenticated)
-                        {
-                            await Application.Current.MainPage.Navigation.PopAsync();
-
-                            await GetMedia(mode);
-                        }
-                    };
-
-                    loginPage.BindingContext = loginViewModel;
-                    await Application.Current.MainPage.Navigation.PushAsync(loginPage);
-                }
-                else
-                {
-                    await GetMedia(mode);
-                }
-            });
         }
 
         public async Task RefreshFeed()
@@ -74,7 +45,10 @@ namespace Mobile.ViewModels
 
                 Trees.Clear();
 
-                foreach (Tree tree in await App.Database.GetTreesAsync())
+                List<Tree> trees = await App.Database.GetTreesAsync();
+                trees.Reverse();
+
+                foreach (Tree tree in trees)
                 {
                     Trees.Add(tree);
                 }
@@ -89,16 +63,48 @@ namespace Mobile.ViewModels
             }
         }
 
-        private async Task GetMedia(string mode)
+        public async Task Post(string mode)
         {
-            if (IsBusy == true)
+            if (IsBusy)
             {
-                // Do nothing if the method has already been called but not finished yet
                 return;
             }
-
+            
             IsBusy = true;
 
+            if (!App.AuthService.IsAuthenticated())
+            {
+                // First time so prompt for login
+                LoginPage loginPage = new LoginPage();
+                LoginViewModel loginViewModel = new LoginViewModel();
+
+                loginViewModel.PropertyChanged += async (sender, args) =>
+                {
+                    if (!args.PropertyName.Equals("IsAuthenticated"))
+                    {
+                        return;
+                    }
+
+                    if (loginViewModel.IsAuthenticated)
+                    {
+                        await Application.Current.MainPage.Navigation.PopAsync();
+                        await GetMedia(mode);
+                    }
+                };
+
+                loginPage.BindingContext = loginViewModel;
+                await Application.Current.MainPage.Navigation.PushAsync(loginPage);
+            }
+            else
+            {
+                await GetMedia(mode);
+            }
+
+            IsBusy = false;
+        }
+
+        private async Task GetMedia(string mode)
+        {
             PostPage postPage = new PostPage();
             PostViewModel postViewModel = new PostViewModel();
             postPage.BindingContext = postViewModel;
@@ -120,7 +126,7 @@ namespace Mobile.ViewModels
 
                     photo = await CrossMedia.Current.TakePhotoAsync(new StoreCameraMediaOptions
                     {
-                        CompressionQuality = 92,
+                        CompressionQuality = 85,
                         DefaultCamera = CameraDevice.Front
                     });
                 }
@@ -137,7 +143,7 @@ namespace Mobile.ViewModels
 
                     photo = await CrossMedia.Current.PickPhotoAsync(new PickMediaOptions
                     {
-                        CompressionQuality = 92,
+                        CompressionQuality = 85,
                     });
                 }
 
@@ -154,10 +160,6 @@ namespace Mobile.ViewModels
                 await Application.Current.MainPage.Navigation.PopAsync();
                 await DisplayAlertAsync("Please allow camera and storage permissions in app settings to upload a new post.");
                 return;
-            }
-            finally
-            {
-                IsBusy = false;
             }
         }
     }
