@@ -2,6 +2,7 @@
 using Mobile.Views;
 using Plugin.Media;
 using Plugin.Media.Abstractions;
+using System;
 using System.Collections.ObjectModel;
 using System.Threading.Tasks;
 using System.Windows.Input;
@@ -90,6 +91,14 @@ namespace Mobile.ViewModels
 
         private async Task GetMedia(string mode)
         {
+            if (IsBusy == true)
+            {
+                // Do nothing if the method has already been called but not finished yet
+                return;
+            }
+
+            IsBusy = true;
+
             PostPage postPage = new PostPage();
             PostViewModel postViewModel = new PostViewModel();
             postPage.BindingContext = postViewModel;
@@ -104,6 +113,7 @@ namespace Mobile.ViewModels
                 {
                     if (!CrossMedia.Current.IsCameraAvailable || !CrossMedia.Current.IsTakePhotoSupported)
                     {
+                        await Application.Current.MainPage.Navigation.PopAsync();
                         await DisplayAlertAsync("No camera detected.");
                         return;
                     }
@@ -120,6 +130,7 @@ namespace Mobile.ViewModels
 
                     if (!CrossMedia.Current.IsPickPhotoSupported)
                     {
+                        await Application.Current.MainPage.Navigation.PopAsync();
                         await DisplayAlertAsync("Photos not supported.");
                         return;
                     }
@@ -129,6 +140,14 @@ namespace Mobile.ViewModels
                         CompressionQuality = 92,
                     });
                 }
+
+                if (photo == null)
+                {
+                    await Application.Current.MainPage.Navigation.PopAsync();
+                    return;
+                }
+
+                postViewModel.ImagePath = photo.Path;
             }
             catch (MediaPermissionException)
             {
@@ -136,14 +155,10 @@ namespace Mobile.ViewModels
                 await DisplayAlertAsync("Please allow camera and storage permissions in app settings to upload a new post.");
                 return;
             }
-            
-            if (photo == null)
+            finally
             {
-                await Application.Current.MainPage.Navigation.PopAsync();
-                return;
+                IsBusy = false;
             }
-
-            postViewModel.ImagePath = photo.Path;
         }
     }
 }
