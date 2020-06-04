@@ -44,6 +44,11 @@ namespace Mobile.ViewModels
 
         public async Task RefreshFeed()
         {         
+            if (IsRefreshing == true)
+            {
+                return;
+            }
+            
             IsRefreshing = true;
 
             NetworkAccess networkAccess = Connectivity.NetworkAccess;
