@@ -1,10 +1,11 @@
-﻿using Xamarin.Forms;
-using Mobile.Views;
+﻿using System;
+
+using Xamarin.Forms;
+
 using Mobile.Models;
 using Mobile.Services;
-using System;
+using Mobile.Views;
 using Mobile.ViewModels;
-using Xamarin.Essentials;
 
 namespace Mobile
 {
@@ -21,6 +22,7 @@ namespace Mobile
             InitializeServices();
 
             MainPage mainPage = new MainPage();
+            mainPage.BindingContext = new MainViewModel();
 
             FeedPage feedPage = new FeedPage();
             feedPage.BindingContext = new FeedViewModel();

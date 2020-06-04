@@ -11,7 +11,8 @@
     <TabbedPage.ToolbarItems>
         <ToolbarItem Text="About"
                      Order="Secondary"
-                     Priority="0" />
+                     Priority="0"
+                     Command="{Binding ShowAboutCommand}" />
     </TabbedPage.ToolbarItems>
     
 </TabbedPage>

@@ -1,0 +1,21 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<views:BasePage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:views="clr-namespace:Mobile.Views"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:d="http://xamarin.com/schemas/2014/forms/design"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             mc:Ignorable="d"
+             x:Class="Mobile.Views.AboutPage">
+
+    <views:BasePage.Title>About</views:BasePage.Title>
+
+    <views:BasePage.Content>
+        <StackLayout Padding="16"
+                     Spacing="16">
+            <Label Text="One More Tree is an app meant to back a campaign where individuals around the world are asked to plant new trees to counter climate change."/>
+            <Label Text="Even though it's built to explore a few of the services provided by Microsoft Azure, we think the topic it is about is a very serious one."/>
+            <Label Text="Planting a tree can be the first step to show more love to our planet. We hope that even a small contribution like this will help raise awareness about this problem we can't ignore anymore."/>
+        </StackLayout>
+    </views:BasePage.Content>
+
+</views:BasePage>
