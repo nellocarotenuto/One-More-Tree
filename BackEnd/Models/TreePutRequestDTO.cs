@@ -12,7 +12,6 @@ namespace BackEnd.Models
     {
         public long Id { get; set; }
 
-        [StringLength(1024, ErrorMessage = "The description is too long.")]
         [TreeDescription]
         public string Description { get; set; }
     }
