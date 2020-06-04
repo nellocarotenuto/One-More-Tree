@@ -1,0 +1,19 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<views:BasePage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:views="clr-namespace:Mobile.Views"
+             xmlns:maps="clr-namespace:Xamarin.Forms.Maps;assembly=Xamarin.Forms.Maps"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:d="http://xamarin.com/schemas/2014/forms/design"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             mc:Ignorable="d"
+             x:Class="Mobile.Views.LocationPage">
+
+    <views:BasePage.Title>Choose location</views:BasePage.Title>
+
+    <views:BasePage.Content>
+
+        <ContentView Content="{Binding Map}"/>
+
+    </views:BasePage.Content>
+    
+</views:BasePage>
