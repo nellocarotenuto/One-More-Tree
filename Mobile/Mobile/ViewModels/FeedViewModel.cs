@@ -43,14 +43,7 @@ namespace Mobile.ViewModels
         }
 
         public async Task RefreshFeed()
-        {         
-            if (IsRefreshing == true)
-            {
-                return;
-            }
-            
-            IsRefreshing = true;
-
+        {
             NetworkAccess networkAccess = Connectivity.NetworkAccess;
             if (networkAccess == NetworkAccess.Internet)
             {
@@ -77,7 +70,7 @@ namespace Mobile.ViewModels
             {
                 Trees.Add(tree);
             }
-            
+
             IsRefreshing = false;
         }
 
@@ -96,6 +89,11 @@ namespace Mobile.ViewModels
                 LoginPage loginPage = new LoginPage();
                 LoginViewModel loginViewModel = new LoginViewModel();
 
+                loginPage.Disappearing += (sender, args) =>
+                {
+                    IsBusy = false;
+                };
+
                 loginViewModel.PropertyChanged += async (sender, args) =>
                 {
                     if (!args.PropertyName.Equals("IsAuthenticated"))
@@ -105,7 +103,6 @@ namespace Mobile.ViewModels
 
                     if (loginViewModel.IsAuthenticated)
                     {
-                        IsBusy = false;
                         await Application.Current.MainPage.Navigation.PopAsync();
                         await GetMedia(mode);
                     }
@@ -116,8 +113,8 @@ namespace Mobile.ViewModels
             }
             else
             {
-                IsBusy = false;
                 await GetMedia(mode);
+                IsBusy = false;
             }
         }
 
